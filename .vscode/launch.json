@@ -7,7 +7,7 @@
 
         {
             "name": "(gdb) Launch",
-            "preLaunchTask": "g++.exe build active file",
+            "preLaunchTask": "C/C++: g++.exe build active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.exe",
@@ -17,7 +17,7 @@
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
+            "miDebuggerPath": "gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

@@ -7,8 +7,10 @@ int fp(){ return 0;};
 
 int main(int argc, char const *argv[])
 {
-    
+    int t=9;
     cout<<"Hello World"<<endl;
+
+   
 
     auto pfq=fq;
     auto pfp=fp;
@@ -39,6 +41,9 @@ cout<<arr;
     a["f"]= var([](var a){cout<<"in a['f']"; int t=1+2; return a;} );
     a["f"](2);
     cout<<a;
+
+     var vt({1,2,"salam"});
+    cout<<vt;
 
     return 0;
 }

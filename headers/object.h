@@ -47,7 +47,7 @@ namespace Ctriplus
         void convertToObject(){type=OBJECT_TYPE::OBJECT; map_ptr= std::make_shared< map<string,object>>(); if(vec_ptr){vec_ptr->clear();} }
 
         public:
-            object(undefined_class value):type{OBJECT_TYPE::UNDEFIEND} {}
+            //object(undefined_class value):type{OBJECT_TYPE::UNDEFIEND} {}
             object(bool value):value_bool{value},type{OBJECT_TYPE::BOOL} {}
             object(char value):value_char{value},type{OBJECT_TYPE::CHAR} {}
             object(int value):value_int{value},type{OBJECT_TYPE::INT} {}
@@ -57,12 +57,12 @@ namespace Ctriplus
             object(string value):value_str{value},type{OBJECT_TYPE::STRING} {}
             object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {}
             object(function func):func{func},type{OBJECT_TYPE::FUNCTION} {}
-
-            object(){
-                type=OBJECT_TYPE::OBJECT;                
-                map_ptr= std::make_shared< map<string,object>>();                     
-                
+            object(vector<object> vec):type{OBJECT_TYPE::ARRAY} {
+                convertToArray();
+                for(const auto& item:vec){ push_back(item);}
             }
+
+            object(){type=OBJECT_TYPE::UNDEFIEND;  }
             //copy constructor
             // object(const object &obj): type{obj.type},value_int{obj.value_int},vec_ptr{obj.vec_ptr}, map_ptr{obj.map_ptr} { 
             //     cout<<"in copy cons"; 
