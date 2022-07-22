@@ -8,9 +8,7 @@ int fp(){ return 0;};
 int main(int argc, char const *argv[])
 {
     int t=9;
-    cout<<"Hello World"<<endl;
-
-   
+    cout<<"Hello World"<<endl;   
 
     auto pfq=fq;
     auto pfp=fp;
@@ -42,8 +40,9 @@ cout<<arr;
     a["f"](2);
     cout<<a;
 
-     var vt({1,2,"salam"});
-    cout<<vt;
+      //vector<object> vec{1,2,3};
+      var vt{1,2,false};
+     cout<<vt;
 
     return 0;
 }

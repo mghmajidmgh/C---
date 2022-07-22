@@ -57,7 +57,11 @@ namespace Ctriplus
             object(string value):value_str{value},type{OBJECT_TYPE::STRING} {}
             object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {}
             object(function func):func{func},type{OBJECT_TYPE::FUNCTION} {}
-            object(vector<object> vec):type{OBJECT_TYPE::ARRAY} {
+            // object(vector<object> vec):type{OBJECT_TYPE::ARRAY} {
+            //     convertToArray();
+            //     for(const auto& item:vec){ push_back(item);}
+            // }
+            object(initializer_list<object> vec):type{OBJECT_TYPE::ARRAY} {
                 convertToArray();
                 for(const auto& item:vec){ push_back(item);}
             }
