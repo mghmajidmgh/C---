@@ -65,7 +65,7 @@ namespace Ctriplus
                 convertToArray();
                 for(const auto& item:vec){ push_back(item);}
             }
-
+            
             object(){type=OBJECT_TYPE::UNDEFIEND;  }
             //copy constructor
             // object(const object &obj): type{obj.type},value_int{obj.value_int},vec_ptr{obj.vec_ptr}, map_ptr{obj.map_ptr} { 
