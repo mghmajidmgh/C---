@@ -60,7 +60,7 @@ string JSON::getWithoutWhiteSpace(string text){
     }
     return ret;
 }
-var JSON::parse(string text,int ind) {
+var JSON::parseR(string text,int ind) {
         var ret;
 
          for (; ind < text.length(); ind++)    { 
@@ -71,16 +71,10 @@ var JSON::parse(string text,int ind) {
                     string name="";
                     ind++;
                     while(text[ind]!=':' && ind < text.length() ){name+=text[ind]; ind++;}
-                    cout<<" name:"<<name;
                     ind++;//pass :
-                    cout<<"ind:"<<ind<<endl;
-                    var value=JSONparse( text, ind);
+                    var value=JSON::parseR( text, ind);
                     ind=value["ind"];
                     ret["value"][name]=value["value"];
-                    cout<<"after call JSONparse, ind:"<<ind<<" value:"<<ret["value"][name]<<endl;
-                    char tc=text[ind];
-                    int t=0;
-                    //ind++;//pass ,
                 }
                 ind++;//pass }
                 ret["ind"]=ind;
@@ -88,12 +82,9 @@ var JSON::parse(string text,int ind) {
             }else if (text[ind]=='[') {
                 do{
                     ind++;
-                    cout<<"in array,";
-                    cout<<"ind:"<<ind<<endl;
-                    var value=JSONparse( text, ind);
+                    var value=JSON::parseR( text, ind);
                     ret["value"].push_back( value["value"]);
                     ind=value["ind"];
-                    cout<<"in array after call JSONparse, ind:"<<ind<<" value:"<<value["value"]<<endl;
                     char tc=text[ind];
                     int t=0;
                 }while(text[ind]!=']' && ind < text.length());
@@ -110,8 +101,11 @@ var JSON::parse(string text,int ind) {
             }
             
          }
-
-   return ret;
+        return ret;
+    }
+    object JSON::parse(string text){ 
+        string s=JSON::getWithoutWhiteSpace(text);
+        return JSON::parseR(s);
     }
 
 

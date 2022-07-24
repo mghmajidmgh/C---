@@ -115,11 +115,12 @@ namespace Ctriplus
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
     };
 
-     class JSON{        
-            static object parse(string text,int ind=0);
-            static object parse(string text);
-        public:
+     class JSON{  
+        public:      
+            static object parseR(string text,int ind=0);
             static string getWithoutWhiteSpace(string text);
+        public:
+            static object parse(string text);
     };
 
 
