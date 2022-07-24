@@ -1,5 +1,7 @@
 #include "headers/C+++.h"
 
+//#define function a(X,Y,z) var a(X,Y,z)
+
 var u;
 void f(var a,var b=u){}
 void fq(){};
@@ -10,9 +12,7 @@ var JSONparse(string text,int ind=0);
 int main(int argc, char const *argv[])
 {
     int t=9;
-    cout<<"Hello World"<<endl;   
-
-   
+    cout<<"Hello World"<<endl;     
 
 
 
@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
      //cout<<vt;
 
      
-    string j2=R"(
+    string j=R"(
     {
     "glossary": {
         "title": "example glossary",
@@ -75,7 +75,7 @@ int main(int argc, char const *argv[])
     }
 }
     )";
-     string j=R"([ 1, {"name":"majid"}, 3 ])";
+     string j2=R"([ 1, {"name":"majid"}, 3 ])";
 
 cout<<endl<<j<<endl;
     string s=getWithoutWhiteSpace(j);
@@ -119,7 +119,9 @@ var JSONparse(string text,int ind)
                     var value=JSONparse( text, ind);
                     ind=value["ind"];
                     ret["value"][name]=value["value"];
-                    cout<<"after call JSONparse, ind:"<<ind<<" value:"<<ret[name]<<endl;
+                    cout<<"after call JSONparse, ind:"<<ind<<" value:"<<ret["value"][name]<<endl;
+                    char tc=text[ind];
+                    int t=0;
                     //ind++;//pass ,
                 }
                 ind++;//pass }
@@ -140,8 +142,10 @@ var JSONparse(string text,int ind)
                 ret["ind"]=ind;
                 break;
             }else{
-                string value="";               
-               while(text[ind]!=':' && text[ind]!=',' && text[ind]!=']' && text[ind]!='}' && ind < text.length()){value+=text[ind]; ind++;}
+                string value="";      
+                bool isString=(text[ind]=='\"');         
+               do{value+=text[ind]; ind++;}while( ( isString && text[ind]!='\"' || !isString && text[ind]!=':' && text[ind]!=',' && text[ind]!=']' && text[ind]!='}') && ind < text.length());
+               if(isString){value+='\"';ind++;}
                ret["ind"]=ind;
                ret["value"]=value;
                break;

@@ -99,7 +99,7 @@ namespace Ctriplus
 
             object operator()(object argument) ;
 
-            string toString(string padding);
+            string toString(const string padding)const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
 
             object& push_back(object obj){

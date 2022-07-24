@@ -5,27 +5,32 @@ namespace Ctriplus
 {   
     object object::operator()(object argument){return func(argument); };    
 
-    string object::toString(string padding){
+    string object::toString(const string padding)const{
         string ret=padding;
+        string tpad="  ";
 
-        if (obj.type==OBJECT_TYPE::CHAR) {ret=to_string(obj.value_char);}
-        else if (obj.type==OBJECT_TYPE::INT){ret=to_string(obj.value_int);}
-        else if (obj.type==OBJECT_TYPE::LONG_LONG){ret=to_string(obj.value_ll);}
-        else if (obj.type==OBJECT_TYPE::DOUBLE){ret=to_string(obj.value_double);}
-        else if (obj.type==OBJECT_TYPE::LONG_DOUBLE){ret=to_string(obj.value_long_double);}
-        else if (obj.type==OBJECT_TYPE::STRING){ret=(obj.value_str);}
-        else if (obj.type==OBJECT_TYPE::ARRAY){
-            for(auto const& item:*obj.vec_ptr){
-                ret+= item.toString(padding+"\t")+",";
+        if (type==OBJECT_TYPE::CHAR) {ret=to_string(value_char);}
+        else if (type==OBJECT_TYPE::INT){ret=to_string(value_int);}
+        else if (type==OBJECT_TYPE::LONG_LONG){ret=to_string(value_ll);}
+        else if (type==OBJECT_TYPE::DOUBLE){ret=to_string(value_double);}
+        else if (type==OBJECT_TYPE::LONG_DOUBLE){ret=to_string(value_long_double);}
+        else if (type==OBJECT_TYPE::STRING){ret=(value_str);}
+        else if (type==OBJECT_TYPE::ARRAY){
+            bool isfirst=true;
+            ret+="[";
+            for(object const& item:*vec_ptr){
+                if(isfirst){isfirst=false;}else{ret+=",";}
+                ret+= item.toString( padding +tpad);
             }
-            ret+="\n";
-        }else if (obj.type==OBJECT_TYPE::OBJECT){
-            ret+="{\n";
-            for(auto& [key, value]: *obj.map_ptr){
-                ret+="\t"+ key + ":" + value.toString(padding+"\t")+"\n";
-            }
-            
-            ret"}\n";
+            ret+="]";
+        }else if (type==OBJECT_TYPE::OBJECT){
+             bool isfirst=true;
+            ret+="\n"+padding+"{\n";
+            for(auto& [key, value]: *map_ptr){
+                if(isfirst){isfirst=false;}else{ret+=",\n";}
+                ret+=padding+tpad+ key + ":" + value.toString(padding+tpad);
+            }            
+            ret+="\n"+padding+"}";
         }
 
         return ret;
@@ -33,7 +38,7 @@ namespace Ctriplus
 
     std::ostream& operator<<(std::ostream& stream, const object& obj)
     {
-        stream<<obj.toString2();
+        stream<<obj.toString("");
         return stream;
     }
 
