@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <stdexcept>
+#include <string>
 
 using namespace std;
 using namespace std::rel_ops;
@@ -65,7 +66,7 @@ namespace Ctriplus
                 convertToArray();
                 for(const auto& item:vec){ push_back(item);}
             }
-            
+
             object(){type=OBJECT_TYPE::UNDEFIEND;  }
             //copy constructor
             // object(const object &obj): type{obj.type},value_int{obj.value_int},vec_ptr{obj.vec_ptr}, map_ptr{obj.map_ptr} { 
@@ -99,6 +100,7 @@ namespace Ctriplus
 
             object operator()(object argument) ;
 
+            string toString(const string padding)const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
 
             object& push_back(object obj){
@@ -111,6 +113,13 @@ namespace Ctriplus
                 return *this;
             }
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
+    };
+
+     class JSON{        
+            static object parse(string text,int ind=0);
+            static object parse(string text);
+        public:
+            static string getWithoutWhiteSpace(string text);
     };
 
 
