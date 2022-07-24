@@ -129,7 +129,7 @@ var JSONparse(string text,int ind)
                 break;
             }else if (text[ind]=='[') {
                 do{
-                ind++;
+                    ind++;
                     cout<<"in array,";
                     cout<<"ind:"<<ind<<endl;
                     var value=JSONparse( text, ind);
@@ -139,7 +139,7 @@ var JSONparse(string text,int ind)
                     char tc=text[ind];
                     int t=0;
                 }while(text[ind]!=']' && ind < text.length());
-                ret["ind"]=ind;
+                ret["ind"]=ind+1;
                 break;
             }else{
                 string value="";      

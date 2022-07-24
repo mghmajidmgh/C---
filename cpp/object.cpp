@@ -5,7 +5,7 @@ namespace Ctriplus
 {   
     object object::operator()(object argument){return func(argument); };    
 
-    string object::toString(const string padding)const{
+    string object::toString(const string padding="")const{
         string ret=padding;
         string tpad="  ";
 
@@ -20,7 +20,7 @@ namespace Ctriplus
             ret+="[";
             for(object const& item:*vec_ptr){
                 if(isfirst){isfirst=false;}else{ret+=",";}
-                ret+= item.toString( padding +tpad);
+                ret+= item.toString();
             }
             ret+="]";
         }else if (type==OBJECT_TYPE::OBJECT){
