@@ -44,6 +44,7 @@
         "xlocinfo": "cpp",
         "xlocnum": "cpp",
         "xstddef": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "xlocmon": "cpp"
     }
 }
