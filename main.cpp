@@ -1,5 +1,6 @@
 #include "headers/C+++.h"
 
+
 var u;
 void f(var a,var b=u){}
 void fq(){};
@@ -70,9 +71,13 @@ int main(int argc, char const *argv[])
     )";
      string j2=R"([ 1, {"name":"majid"}, 3 ])";
 
+
     cout<<endl<<j<<endl;
     var jj=JSON::parse(j);
     cout<<jj["value"]<<endl;
+
+    console::log("salam") ;
+
 
     return 0;
 }

@@ -9,7 +9,9 @@ namespace Ctriplus
         string ret=padding;
         string tpad="  ";
 
-        if (type==OBJECT_TYPE::CHAR) {ret=to_string(value_char);}
+        if (type==OBJECT_TYPE::UNDEFIEND) {ret="undefined";}
+        if (type==OBJECT_TYPE::BOOL) {ret=(value_bool)?"true":"false";}
+        else if (type==OBJECT_TYPE::CHAR) {ret=to_string(value_char);}
         else if (type==OBJECT_TYPE::INT){ret=to_string(value_int);}
         else if (type==OBJECT_TYPE::LONG_LONG){ret=to_string(value_ll);}
         else if (type==OBJECT_TYPE::DOUBLE){ret=to_string(value_double);}
@@ -108,5 +110,9 @@ var JSON::parseR(string text,int ind) {
         return JSON::parseR(s);
     }
 
+    void console::log(object obj1,object obj2,object obj3,object obj4,object obj5,object obj6,object obj7,object obj8,object obj9,object obj10,object obj11,object obj12,object obj13){
+        std::cout<<obj1;
+        if(!obj2.isUndefined()){std::cout<<obj2;}
+    }
 
 }
