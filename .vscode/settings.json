@@ -45,7 +45,9 @@
         "xlocnum": "cpp",
         "xstddef": "cpp",
         "xtree": "cpp",
+        "algorithm": "cpp",
+        "iomanip": "cpp",
         "xlocmon": "cpp",
-        "string": "cpp"
+        "xloctime": "cpp"
     }
 }

@@ -10,7 +10,7 @@
             "preLaunchTask": "C/C++: g++.exe build active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main.exe",
+            "program": "${workspaceFolder}\\..\\main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

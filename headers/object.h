@@ -1,6 +1,7 @@
 #ifndef MYOBJECT_H
 #define MYOBJECT_H
 
+#include <iostream>
 #include <vector>
 #include <map>
 #include <memory>
@@ -8,6 +9,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <stdexcept>
+#include <string>
 
 using namespace std;
 using namespace std::rel_ops;
@@ -18,10 +20,7 @@ namespace Ctriplus
     using var=object;
 
     enum OBJECT_TYPE{UNDEFIEND,BOOL,CHAR,INT,LONG_LONG,DOUBLE,LONG_DOUBLE,STRING,ARRAY,OBJECT,FUNCTION};
-    class undefined_class{};
-    //undefined_class undefined;
     using function=object (*)(object argument);
-
 
     class object
     {
@@ -74,6 +73,9 @@ namespace Ctriplus
             //copy assignment operator
             // object& operator=(const object& right_hand_side){}
 
+            bool isUndefined(){return (type==OBJECT_TYPE::UNDEFIEND)?true:false;}
+
+
             bool operator<(const object& obj)const{ return value_int<obj.value_int; }
             bool operator<(int val)const{ return value_int<val; }
             bool operator==(const object& obj)const{ return value_int==obj.value_int; }
@@ -112,6 +114,19 @@ namespace Ctriplus
                 return *this;
             }
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
+    };
+
+     class JSON{  
+        public:      
+            static object parseR(string text,int ind=0);
+            static string getWithoutWhiteSpace(string text);
+        public:
+            static object parse(string text);
+    };
+
+    class console{
+        public:
+            static void log(object obj1,object obj2=object(),object obj3=object(),object obj4=object(),object obj5=object(),object obj6=object(),object obj7=object(),object obj8=object(),object obj9=object(),object obj10=object(),object obj11=object(),object obj12=object(),object obj13=object());
     };
 
 

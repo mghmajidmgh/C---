@@ -1,6 +1,5 @@
-#include "headers/C+++.h"
+#inclsde "headers/C+++.h"
 
-//#define function a(X,Y,z) var a(X,Y,z)
 
 var u;
 void f(var a,var b=u){}
@@ -11,10 +10,8 @@ var JSONparse(string text,int ind=0);
 
 int main(int argc, char const *argv[])
 {
-    int t=9;
-    cout<<"Hello World"<<endl;     
-
-
+//     int t=9;
+//     cout<<"Hello World"<<endl;   
 
 //     auto pfq=fq;
 //     auto pfp=fp;
@@ -36,21 +33,20 @@ int main(int argc, char const *argv[])
 //     arr[1]=string("salam");
 // cout<<arr;
 
-    // object a{1};
-    // object b=a;
-    // if(a==2){}
-    // double d=a;
-    // a["name"]="Majid";
-    // a["family"]="hoseini";
-    // a["f"]= var([](var a){cout<<"in a['f']"; int t=1+2; return a;} );
-    // a["f"](2);
-    // cout<<a;
+//     object a{1};
+//     object b=a;
+//     if(a==2){}
+//     double d=a;
+//     a["name"]="Majid";
+//     a["family"]="hoseini";
+//     a["f"]= var([](var a){cout<<"in a['f']"; int t=1+2; return a;} );
+//     a["f"](2);
+//     cout<<a;
 
-      //vector<object> vec{1,2,3};
-      //var vt{1,2,false};
-     //cout<<vt;
+//       //vector<object> vec{1,2,3};
+//       var vt{1,2,false};
+//      cout<<vt;
 
-     
     string j=R"(
     {
     "glossary": {
@@ -77,81 +73,14 @@ int main(int argc, char const *argv[])
     )";
      string j2=R"([ 1, {"name":"majid"}, 3 ])";
 
-cout<<endl<<j<<endl;
-    string s=getWithoutWhiteSpace(j);
-    cout<<s<<endl;
-    var jj=JSONparse(s);cout<<jj["value"]<<endl;
+
+    cout<<endl<<j<<endl;
+    var jj=JSON::parse(j);
+    cout<<jj["value"]<<endl;
+
+    console::log("salam") ;
+
 
     return 0;
 }
 
-string getWithoutWhiteSpace(string text){
-    string ret="";
-    for (size_t ind = 0; ind < text.length(); ind++)
-    {        
-        if (text[ind]=='"')
-        {
-            ret+=text[ind]; ind++;
-             for (; ind < text.length(); ind++)  { ret+=text[ind];  if (text[ind]=='\\')  { ret+=text[ind+1]; ind+=2; } if(text[ind]=='\"')  { ind++; break;}  }         
-        }
-        char ch=text[ind];
-        if (text[ind]!=' ' && text[ind]!='\n'  && text[ind]!='\t'){
-            ret+=text[ind];
-        }        
-    }
-    return ret;
-}
-var JSONparse(string text,int ind)
-    {
-        var ret;
-
-         for (; ind < text.length(); ind++)    { 
-           
-            if (text[ind]=='{')
-            {
-                while(text[ind]!='}' && ind < text.length()){
-                    string name="";
-                    ind++;
-                    while(text[ind]!=':' && ind < text.length() ){name+=text[ind]; ind++;}
-                    cout<<" name:"<<name;
-                    ind++;//pass :
-                    cout<<"ind:"<<ind<<endl;
-                    var value=JSONparse( text, ind);
-                    ind=value["ind"];
-                    ret["value"][name]=value["value"];
-                    cout<<"after call JSONparse, ind:"<<ind<<" value:"<<ret["value"][name]<<endl;
-                    char tc=text[ind];
-                    int t=0;
-                    //ind++;//pass ,
-                }
-                ind++;//pass }
-                ret["ind"]=ind;
-                break;
-            }else if (text[ind]=='[') {
-                do{
-                    ind++;
-                    cout<<"in array,";
-                    cout<<"ind:"<<ind<<endl;
-                    var value=JSONparse( text, ind);
-                    ret["value"].push_back( value["value"]);
-                    ind=value["ind"];
-                    cout<<"in array after call JSONparse, ind:"<<ind<<" value:"<<value["value"]<<endl;
-                    char tc=text[ind];
-                    int t=0;
-                }while(text[ind]!=']' && ind < text.length());
-                ret["ind"]=ind+1;
-                break;
-            }else{
-                string value="";      
-                bool isString=(text[ind]=='\"');         
-               do{value+=text[ind]; ind++;}while( ( isString && text[ind]!='\"' || !isString && text[ind]!=':' && text[ind]!=',' && text[ind]!=']' && text[ind]!='}') && ind < text.length());
-               if(isString){value+='\"';ind++;}
-               ret["ind"]=ind;
-               ret["value"]=value;
-               break;
-            }
-            
-         }
-
-   return ret;
-    }
