@@ -30,7 +30,7 @@ namespace Ctriplus
             ret+="\n"+padding+"{\n";
             for(auto& [key, value]: *map_ptr){
                 if(isfirst){isfirst=false;}else{ret+=",\n";}
-                ret+=padding+tpad+ key + ":" + value.toString(padding+tpad);
+                ret+=padding+tpad+ '\"'+ key +'\"'+ ":" + value.toString(padding+tpad);
             }            
             ret+="\n"+padding+"}";
         }
@@ -74,6 +74,7 @@ var JSON::parseR(string text,int ind) {
                     ind++;
                     while(text[ind]!=':' && ind < text.length() ){name+=text[ind]; ind++;}
                     ind++;//pass :
+                    if(name[0]=='\"' && name[name.length()-1]=='\"'){name=name.substr(1,name.length()-2);}//remove "" from name
                     var value=JSON::parseR( text, ind);
                     ind=value["ind"];
                     ret["value"][name]=value["value"];
