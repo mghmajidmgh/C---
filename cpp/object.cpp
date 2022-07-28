@@ -116,4 +116,5 @@ var JSON::parseR(string text,int ind) {
         if(!obj2.isUndefined()){std::cout<<obj2;}
     }
 
+    void print(){};
 }

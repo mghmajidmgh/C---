@@ -6,9 +6,12 @@ void f(var a,var b=u){}
 void fq(){};
 int fp(){ return 0;};
 
+
 int main(int argc, char const *argv[])
 {
-//     int t=9;
+    var pa="salam i am pa";
+    print (1,pa);
+     int t=9;
 //     cout<<"Hello World"<<endl;   
 
 //     auto pfq=fq;

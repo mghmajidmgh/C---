@@ -131,6 +131,18 @@ namespace Ctriplus
 
 
     //inline bool operator<(const object& obj,int val)const{ return obj.value_int<val; }
+
+    /////////   print    //////////
+    // Variadic function
+    void print();
+    template <typename T, typename... Types>
+    void print(T var1, Types... var2)
+    {
+        cout << var1 << " "; 
+        print(var2...);
+    }
+    ////////////////////////////////
+
     
 }
 
