@@ -20,7 +20,17 @@ namespace Ctriplus
     using var=object;
 
     enum OBJECT_TYPE{UNDEFIEND,BOOL,CHAR,INT,LONG_LONG,DOUBLE,LONG_DOUBLE,STRING,ARRAY,OBJECT,FUNCTION};
-    using function=object (*)(object argument);
+    using function=object (*)(object &self);
+    using function1=object (*)(object &self,object& argument);
+    using functionNoReturn=void (*)(object &self,object& argument);
+
+    class JSON{  
+        public:      
+            static object parseR(string text,int ind=0);
+            static string getWithoutWhiteSpace(string text);
+        public:
+            static object parse(string text);
+    };
 
     class object
     {
@@ -36,6 +46,7 @@ namespace Ctriplus
         //void * ptr;
         std::shared_ptr<vector<object>> vec_ptr{};
         std::shared_ptr<map<string, object> > map_ptr{};
+       
         
 
         void convertToArray(){
@@ -45,7 +56,12 @@ namespace Ctriplus
         }
         void convertToObject(){type=OBJECT_TYPE::OBJECT; map_ptr= std::make_shared< map<string,object>>(); if(vec_ptr){vec_ptr->clear();} }
 
+        void checkForObjectString(string value){//cout<<"checkForObjectString";
+                if(value[0]=='{' && value.back()=='}' || value[0]=='[' && value.back()==']'){  type= OBJECT_TYPE::OBJECT; *this=JSON::parse(value);}
+        }
+
         public:
+            object *parent;
             object(){type=OBJECT_TYPE::UNDEFIEND;  }
             //object(undefined_class value):type{OBJECT_TYPE::UNDEFIEND} {}
             object(bool value):value_bool{value},type{OBJECT_TYPE::BOOL} {}
@@ -54,9 +70,10 @@ namespace Ctriplus
             object(long long value):value_ll{value},type{OBJECT_TYPE::LONG_LONG} {}
             object(double value):value_double{value},type{OBJECT_TYPE::DOUBLE} {}
             object(long double value):value_long_double{value},type{OBJECT_TYPE::LONG_DOUBLE} {}
-            object(string value):value_str{value},type{OBJECT_TYPE::STRING} {}
-            object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {}
+            object(string value):value_str{value},type{OBJECT_TYPE::STRING} {checkForObjectString(value);}
+            object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {checkForObjectString(value);}            
             object(function func):func{func},type{OBJECT_TYPE::FUNCTION} {}
+            //object(functionNoReturn funcp):type{OBJECT_TYPE::FUNCTION} { func= [funcp](object self,object argument)->object {funcp(self,argument); return object();};  }
             object(vector<object> vec):type{OBJECT_TYPE::ARRAY} {                
                 convertToArray();
                 for(const auto& item:vec){ push_back(item); cout<<endl<<item;}
@@ -74,6 +91,17 @@ namespace Ctriplus
             // object& operator=(const object& right_hand_side){}
 
             bool isUndefined(){return (type==OBJECT_TYPE::UNDEFIEND)?true:false;}
+            bool isBool(){return (type==OBJECT_TYPE::BOOL)?true:false;}
+            bool isChar(){return (type==OBJECT_TYPE::CHAR)?true:false;}
+            bool isInt(){return (type==OBJECT_TYPE::INT)?true:false;}
+            bool isLongLong(){return (type==OBJECT_TYPE::LONG_LONG)?true:false;}
+            bool isDouble(){return (type==OBJECT_TYPE::DOUBLE)?true:false;}
+            bool isLongDouble(){return (type==OBJECT_TYPE::LONG_DOUBLE)?true:false;}
+            bool isString(){return (type==OBJECT_TYPE::STRING)?true:false;}
+            bool isArray(){return (type==OBJECT_TYPE::ARRAY)?true:false;}
+            bool isObject(){return (type==OBJECT_TYPE::OBJECT)?true:false;}
+            bool isFunction(){return (type==OBJECT_TYPE::FUNCTION)?true:false;}
+            string getString()const{ if(type!=OBJECT_TYPE::STRING){throw runtime_error{ "object is not a string"};}else{ return value_str;} }
 
 
             bool operator<(const object& obj)const{ return value_int<obj.value_int; }
@@ -82,6 +110,9 @@ namespace Ctriplus
             bool operator==(int value)const{ return value_int==value; }
 
             object operator+(const object& obj)const{
+                if(type==OBJECT_TYPE::STRING){
+                    return value_str+obj.getString();
+                }
                 return obj;
             }
             object& operator++(){value_int++; return *this;}
@@ -91,6 +122,7 @@ namespace Ctriplus
             }
             object& subscriptor(string name){
                 if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
+                if((*map_ptr)[name].isFunction()){(*map_ptr)[name].parent=this;}
                 return (*map_ptr)[name];
             }
             object& operator[](const char* name){return subscriptor(string(name) );}
@@ -99,6 +131,7 @@ namespace Ctriplus
             operator int() const { return value_int; }
             operator double() const { return value_double; }
 
+            object operator()() ;
             object operator()(object argument) ;
 
             string toString(const string padding)const;
@@ -116,13 +149,7 @@ namespace Ctriplus
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
     };
 
-     class JSON{  
-        public:      
-            static object parseR(string text,int ind=0);
-            static string getWithoutWhiteSpace(string text);
-        public:
-            static object parse(string text);
-    };
+    
 
     class Console{
         public:
@@ -132,10 +159,7 @@ namespace Ctriplus
     };
     extern Console console;
 
-    void print();
-    template <typename T> void print(const T& t);
-    template <typename First, typename... Rest> void print(const First& first, const Rest&... rest);
-
+    
     //inline bool operator<(const object& obj,int val)const{ return obj.value_int<val; }
 
     /////////   print    //////////
