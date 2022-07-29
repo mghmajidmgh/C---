@@ -4,7 +4,9 @@
 namespace Ctriplus
 {   
     
-    object object::operator()(){return func(*parent); };    
+    object object::operator()(){
+        return func(*parent);
+    } 
 
     string object::toString(const string padding="")const{
         string ret=padding;
