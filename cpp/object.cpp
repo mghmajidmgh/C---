@@ -110,9 +110,29 @@ var JSON::parseR(string text,int ind) {
         return JSON::parseR(s);
     }
 
-    void console::log(object obj1,object obj2,object obj3,object obj4,object obj5,object obj6,object obj7,object obj8,object obj9,object obj10,object obj11,object obj12,object obj13){
+    void Console::log(object obj1,object obj2,object obj3,object obj4,object obj5,object obj6,object obj7,object obj8,object obj9,object obj10,object obj11,object obj12,object obj13){
         std::cout<<obj1;
         if(!obj2.isUndefined()){std::cout<<obj2;}
     }
 
+    // template <typename... Ts>
+    // void Console::log(Ts... args){
+    //      ((std::cout << args << ' '), ...);
+    // }
+    Console console ;
+
+    ////////   print   ///////
+    void print() {
+        cout << endl;
+    }
+
+    template <typename T> void print(const T& t) {
+        cout << t << endl;
+    }
+
+    template <typename First, typename... Rest> void print(const First& first, const Rest&... rest) {
+        cout << first << ", ";
+        print(rest...); // recursive call using pack expansion syntax
+    }
+    //////////////////////////
 }

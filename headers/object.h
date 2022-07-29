@@ -46,6 +46,7 @@ namespace Ctriplus
         void convertToObject(){type=OBJECT_TYPE::OBJECT; map_ptr= std::make_shared< map<string,object>>(); if(vec_ptr){vec_ptr->clear();} }
 
         public:
+            object(){type=OBJECT_TYPE::UNDEFIEND;  }
             //object(undefined_class value):type{OBJECT_TYPE::UNDEFIEND} {}
             object(bool value):value_bool{value},type{OBJECT_TYPE::BOOL} {}
             object(char value):value_char{value},type{OBJECT_TYPE::CHAR} {}
@@ -56,16 +57,15 @@ namespace Ctriplus
             object(string value):value_str{value},type{OBJECT_TYPE::STRING} {}
             object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {}
             object(function func):func{func},type{OBJECT_TYPE::FUNCTION} {}
-            // object(vector<object> vec):type{OBJECT_TYPE::ARRAY} {
+            object(vector<object> vec):type{OBJECT_TYPE::ARRAY} {                
+                convertToArray();
+                for(const auto& item:vec){ push_back(item); cout<<endl<<item;}
+            }
+            // object(initializer_list<object> vec):type{OBJECT_TYPE::ARRAY} {
             //     convertToArray();
             //     for(const auto& item:vec){ push_back(item);}
             // }
-            object(initializer_list<object> vec):type{OBJECT_TYPE::ARRAY} {
-                convertToArray();
-                for(const auto& item:vec){ push_back(item);}
-            }
 
-            object(){type=OBJECT_TYPE::UNDEFIEND;  }
             //copy constructor
             // object(const object &obj): type{obj.type},value_int{obj.value_int},vec_ptr{obj.vec_ptr}, map_ptr{obj.map_ptr} { 
             //     cout<<"in copy cons"; 
@@ -124,11 +124,17 @@ namespace Ctriplus
             static object parse(string text);
     };
 
-    class console{
+    class Console{
         public:
-            static void log(object obj1,object obj2=object(),object obj3=object(),object obj4=object(),object obj5=object(),object obj6=object(),object obj7=object(),object obj8=object(),object obj9=object(),object obj10=object(),object obj11=object(),object obj12=object(),object obj13=object());
+            void log(object obj1,object obj2=object(),object obj3=object(),object obj4=object(),object obj5=object(),object obj6=object(),object obj7=object(),object obj8=object(),object obj9=object(),object obj10=object(),object obj11=object(),object obj12=object(),object obj13=object());
+            //template <typename... Ts>
+            //void log(Ts... args);
     };
+    extern Console console;
 
+    void print();
+    template <typename T> void print(const T& t);
+    template <typename First, typename... Rest> void print(const First& first, const Rest&... rest);
 
     //inline bool operator<(const object& obj,int val)const{ return obj.value_int<val; }
     

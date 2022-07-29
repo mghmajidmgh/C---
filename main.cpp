@@ -1,15 +1,26 @@
 #include "headers/C+++.h"
 
 
+using namespace std;
+using namespace Ctriplus;
+
 var u;
 void f(var a,var b=u){}
 void fq(){};
-int fp(){ return 0;};
-string getWithoutWhiteSpace(string text);
-var JSONparse(string text,int ind=0);
+#define NAME_OF( v ) #v
+int fp(int ii){ std::cout << NAME_OF(ii)<< std::endl; return 0;};
+class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 
 int main(int argc, char const *argv[])
 {
+    print(1, 124);
+    console.log("con.log");
+    var ttt={0};
+    //var arr1({1,2,3});
+    //fp(ttt);
+    c c1;
+    ttt=1;
+   
 //     int t=9;
 //     cout<<"Hello World"<<endl;   
 
@@ -78,7 +89,7 @@ int main(int argc, char const *argv[])
     var jj=JSON::parse(j);
     cout<<jj["value"]<<endl;
 
-    console::log("salam") ;
+    console.log("salam") ;
 
 
     return 0;
