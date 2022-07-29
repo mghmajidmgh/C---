@@ -161,6 +161,7 @@ namespace Ctriplus
 
             string toString(const string padding)const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
+            friend string type(var obj);
 
             object& push_back(object obj){
                 if (type!=OBJECT_TYPE::ARRAY)

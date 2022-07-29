@@ -186,6 +186,23 @@ var JSON::parseR(string text,int ind) {
         return ret;
     }
     ////////////////////////////////
+    string type(var obj){
+        string ret="";
+
+        if (obj.type==OBJECT_TYPE::UNDEFIEND) {ret="UNDEFIEND";}
+        else if (obj.type==OBJECT_TYPE::BOOL) {ret="BOOL";}
+        else if (obj.type==OBJECT_TYPE::CHAR) {ret="CHAR";}
+        else if (obj.type==OBJECT_TYPE::INT){ret="INT";}
+        else if (obj.type==OBJECT_TYPE::LONG_LONG){ret="LONG_LONG";}
+        else if (obj.type==OBJECT_TYPE::DOUBLE){ret="DOUBLE";}
+        else if (obj.type==OBJECT_TYPE::LONG_DOUBLE){ret="LONG_DOUBLE";}
+        else if (obj.type==OBJECT_TYPE::STRING){ret="STRING";}
+        else if (obj.type==OBJECT_TYPE::ARRAY){ ret="ARRAY";  }
+        else if (obj.type==OBJECT_TYPE::OBJECT){ ret="OBJECT" ;     }
+        else if (obj.type==OBJECT_TYPE::FUNCTION){ret="FUNCTION";}
+
+        return ret;
+    }
 
 
 
