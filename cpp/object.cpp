@@ -203,7 +203,12 @@ var JSON::parseR(string text,int ind) {
 
         return ret;
     }
-
+    int len(var obj){
+        if (obj.type==OBJECT_TYPE::STRING){return obj.value_str.length();}
+        else if (obj.type==OBJECT_TYPE::ARRAY){ return (*obj.vec_ptr).size(); }
+        else if (obj.type==OBJECT_TYPE::OBJECT){  return (*obj.map_ptr).size(); }
+        return 0;
+    }
 
 
 
