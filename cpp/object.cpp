@@ -23,7 +23,8 @@ namespace Ctriplus
             ret+="[";
             for(object const& item:*vec_ptr){
                 if(isfirst){isfirst=false;}else{ret+=",";}
-                ret+= item.toString();
+                string ch_quote=(item.isString())?"\"":"";
+                ret+= ch_quote+item.toString()+ch_quote;
             }
             ret+="]";
         }else if (type==OBJECT_TYPE::OBJECT){
@@ -31,7 +32,8 @@ namespace Ctriplus
             ret+="\n"+padding+"{\n";
             for(auto& [key, value]: *map_ptr){
                 if(isfirst){isfirst=false;}else{ret+=",\n";}
-                ret+=padding+tpad+ '\"'+ key +'\"'+ ":" + value.toString(padding+tpad);
+                string ch_quote=(value.isString())?"\"":"";
+                ret+=padding+tpad+ '\"'+ key +'\"'+ ":" +ch_quote+ value.toString(padding+tpad)+ch_quote;
             }            
             ret+="\n"+padding+"}";
         }else if (type==OBJECT_TYPE::FUNCTION){ret="function";}
@@ -99,9 +101,22 @@ var JSON::parseR(string text,int ind) {
                 bool isString=(text[ind]=='\"');         
                do{value+=text[ind]; ind++;}while( ( isString && text[ind]!='\"' || !isString && text[ind]!=':' && text[ind]!=',' && text[ind]!=']' && text[ind]!='}') && ind < text.length());
                if(isString){value+='\"';ind++;}
-               value=value.substr(1,value.length()-2);//remove "" from value
+               var ovalue;
+               if(value[0]=='\"' && value.back()=='\"') {ovalue=value.substr(1,value.length()-2);}//remove "" from value
+               else
+               {
+                   ovalue = parseInt(value);
+                   if (ovalue.isUndefined())
+                   {
+                       ovalue = parseDouble(value);
+                       if (ovalue.isUndefined())
+                       {
+                           ovalue = parseBool(value);
+                       }
+                   }
+               }
                ret["ind"]=ind;
-               ret["value"]=value;
+               ret["value"]=ovalue;
                break;
             }
             
@@ -120,4 +135,57 @@ var JSON::parseR(string text,int ind) {
     Console console ;
 
     void print(){};
+
+    
+    ///////   parseInt    //////////
+    var parseBool(string value)
+    {
+        var ret;        
+        if(value=="true"){ret=true;}else if(value=="false"){ret=false;}else{std::cerr << "string is not bool in parseBool" << '\n';}       
+        return ret;
+    }
+    var parseInt(string value)
+    {
+        var ret;
+        try
+        {
+            ret = stoi(value);
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        return ret;
+    }
+    var parseFloat(string value)
+    {
+        var ret;
+        try
+        {
+            ret = stof(value);
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        return ret;
+    }
+    var parseDouble(string value)
+    {
+        var ret;
+        try
+        {
+            ret = stod(value);
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        return ret;
+    }
+    ////////////////////////////////
+
+
+
+
 }

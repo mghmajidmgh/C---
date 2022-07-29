@@ -34,6 +34,8 @@ int main(int argc, char const *argv[])
     print (1,pa);
     console.log("con.log");
 
+
+
      int t=9;
 //     cout<<"Hello World"<<endl;   
 
@@ -88,7 +90,10 @@ int main(int argc, char const *argv[])
                         "para": "A meta-markup language, used to create markup languages such as DocBook.",
 						"GlossSeeAlso": ["GML", "XML"]
                     },
-					"GlossSee": "markup"
+					"GlossSee": "markup",
+                    "num": 1234,
+                    "double_num": 900.145,
+                    "bool": true
                 }
             }
         }

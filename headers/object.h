@@ -52,9 +52,13 @@ namespace Ctriplus
         void convertToArray(){
            type=OBJECT_TYPE::ARRAY;  
             vec_ptr= std::make_shared< vector<object>>(); 
-            if(map_ptr){map_ptr->clear();}
+            map_ptr=nullptr;
         }
-        void convertToObject(){type=OBJECT_TYPE::OBJECT; map_ptr= std::make_shared< map<string,object>>(); if(vec_ptr){vec_ptr->clear();} }
+        void convertToObject(){
+            type=OBJECT_TYPE::OBJECT; 
+            map_ptr= std::make_shared< map<string,object>>(); 
+            vec_ptr=nullptr; 
+        }
 
         void checkForObjectString(string value){//cout<<"checkForObjectString";
                 if(value[0]=='{' && value.back()=='}' || value[0]=='[' && value.back()==']'){  type= OBJECT_TYPE::OBJECT; *this=JSON::parse(value);}
@@ -90,17 +94,17 @@ namespace Ctriplus
             //copy assignment operator
             // object& operator=(const object& right_hand_side){}
 
-            bool isUndefined(){return (type==OBJECT_TYPE::UNDEFIEND)?true:false;}
-            bool isBool(){return (type==OBJECT_TYPE::BOOL)?true:false;}
-            bool isChar(){return (type==OBJECT_TYPE::CHAR)?true:false;}
-            bool isInt(){return (type==OBJECT_TYPE::INT)?true:false;}
-            bool isLongLong(){return (type==OBJECT_TYPE::LONG_LONG)?true:false;}
-            bool isDouble(){return (type==OBJECT_TYPE::DOUBLE)?true:false;}
-            bool isLongDouble(){return (type==OBJECT_TYPE::LONG_DOUBLE)?true:false;}
-            bool isString(){return (type==OBJECT_TYPE::STRING)?true:false;}
-            bool isArray(){return (type==OBJECT_TYPE::ARRAY)?true:false;}
-            bool isObject(){return (type==OBJECT_TYPE::OBJECT)?true:false;}
-            bool isFunction(){return (type==OBJECT_TYPE::FUNCTION)?true:false;}
+            bool isUndefined()const{return (type==OBJECT_TYPE::UNDEFIEND)?true:false;}
+            bool isBool()const{return (type==OBJECT_TYPE::BOOL)?true:false;}
+            bool isChar()const{return (type==OBJECT_TYPE::CHAR)?true:false;}
+            bool isInt()const{return (type==OBJECT_TYPE::INT)?true:false;}
+            bool isLongLong()const{return (type==OBJECT_TYPE::LONG_LONG)?true:false;}
+            bool isDouble()const{return (type==OBJECT_TYPE::DOUBLE)?true:false;}
+            bool isLongDouble()const{return (type==OBJECT_TYPE::LONG_DOUBLE)?true:false;}
+            bool isString()const{return (type==OBJECT_TYPE::STRING)?true:false;}
+            bool isArray()const{return (type==OBJECT_TYPE::ARRAY)?true:false;}
+            bool isObject()const{return (type==OBJECT_TYPE::OBJECT)?true:false;}
+            bool isFunction()const{return (type==OBJECT_TYPE::FUNCTION)?true:false;}
             string getString()const{ if(type!=OBJECT_TYPE::STRING){throw runtime_error{ "object is not a string"};}else{ return value_str;} }
 
 
@@ -171,6 +175,13 @@ namespace Ctriplus
         cout << var1 << " "; 
         print(var2...);
     }
+    ////////////////////////////////
+
+    ///////   parseInt    //////////
+    var parseBool(string value);
+    var parseInt(string value);
+    var parseFloat(string value);
+    var parseDouble(string value);
     ////////////////////////////////
 
     
