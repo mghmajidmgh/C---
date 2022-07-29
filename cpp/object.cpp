@@ -3,7 +3,8 @@
 
 namespace Ctriplus
 {   
-    object object::operator()(object argument){return func(argument); };    
+    
+    object object::operator()(){return func(*parent); };    
 
     string object::toString(const string padding="")const{
         string ret=padding;
@@ -30,10 +31,10 @@ namespace Ctriplus
             ret+="\n"+padding+"{\n";
             for(auto& [key, value]: *map_ptr){
                 if(isfirst){isfirst=false;}else{ret+=",\n";}
-                ret+=padding+tpad+ key + ":" + value.toString(padding+tpad);
+                ret+=padding+tpad+ '\"'+ key +'\"'+ ":" + value.toString(padding+tpad);
             }            
             ret+="\n"+padding+"}";
-        }
+        }else if (type==OBJECT_TYPE::FUNCTION){ret="function";}
 
         return ret;
     }
@@ -74,6 +75,7 @@ var JSON::parseR(string text,int ind) {
                     ind++;
                     while(text[ind]!=':' && ind < text.length() ){name+=text[ind]; ind++;}
                     ind++;//pass :
+                    if(name[0]=='\"' && name[name.length()-1]=='\"'){name=name.substr(1,name.length()-2);}//remove "" from name
                     var value=JSON::parseR( text, ind);
                     ind=value["ind"];
                     ret["value"][name]=value["value"];
@@ -97,6 +99,7 @@ var JSON::parseR(string text,int ind) {
                 bool isString=(text[ind]=='\"');         
                do{value+=text[ind]; ind++;}while( ( isString && text[ind]!='\"' || !isString && text[ind]!=':' && text[ind]!=',' && text[ind]!=']' && text[ind]!='}') && ind < text.length());
                if(isString){value+='\"';ind++;}
+               value=value.substr(1,value.length()-2);//remove "" from value
                ret["ind"]=ind;
                ret["value"]=value;
                break;
@@ -107,32 +110,14 @@ var JSON::parseR(string text,int ind) {
     }
     object JSON::parse(string text){ 
         string s=JSON::getWithoutWhiteSpace(text);
-        return JSON::parseR(s);
+        return JSON::parseR(s)["value"];
     }
 
     void Console::log(object obj1,object obj2,object obj3,object obj4,object obj5,object obj6,object obj7,object obj8,object obj9,object obj10,object obj11,object obj12,object obj13){
         std::cout<<obj1;
         if(!obj2.isUndefined()){std::cout<<obj2;}
     }
-
-    // template <typename... Ts>
-    // void Console::log(Ts... args){
-    //      ((std::cout << args << ' '), ...);
-    // }
     Console console ;
 
-    ////////   print   ///////
-    void print() {
-        cout << endl;
-    }
-
-    template <typename T> void print(const T& t) {
-        cout << t << endl;
-    }
-
-    template <typename First, typename... Rest> void print(const First& first, const Rest&... rest) {
-        cout << first << ", ";
-        print(rest...); // recursive call using pack expansion syntax
-    }
-    //////////////////////////
+    void print(){};
 }

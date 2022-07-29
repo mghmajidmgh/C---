@@ -11,17 +11,30 @@ void fq(){};
 int fp(int ii){ std::cout << NAME_OF(ii)<< std::endl; return 0;};
 class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 
+
 int main(int argc, char const *argv[])
 {
-    print(1, 124);
+    var x = R"({firstName:"John", lastName:"Doe"})";
+    print(x);
+    function f=[](object& self){return self["firstName"]+ var(" ")+ self["lastName"];};
+    // var r=f(x);
+    // print(r);
+    // var of=f;
+    x["f"]=f;
+    //print(x);
+    var result=x["f"]();
+    print(result);
+    print(x);
+    x = R"([1,"salam",2])";
+    print(x);
+    x="i am strong";
+    print(x);
+
+    var pa="salam i am pa";
+    print (1,pa);
     console.log("con.log");
-    var ttt={0};
-    //var arr1({1,2,3});
-    //fp(ttt);
-    c c1;
-    ttt=1;
-   
-//     int t=9;
+
+     int t=9;
 //     cout<<"Hello World"<<endl;   
 
 //     auto pfq=fq;
@@ -87,7 +100,7 @@ int main(int argc, char const *argv[])
 
     cout<<endl<<j<<endl;
     var jj=JSON::parse(j);
-    cout<<jj["value"]<<endl;
+    cout<<jj<<endl;
 
     console.log("salam") ;
 
