@@ -86,6 +86,18 @@ namespace Ctriplus
             //     convertToArray();
             //     for(const auto& item:vec){ push_back(item);}
             // }
+            // object(initializer_list<string,object> map):type{OBJECT_TYPE::OBJECT} {                
+            //     convertToObject();
+            //     for(const auto& [key, value]: map){
+            //          (*map_ptr)[key]=value;
+            //     }
+            // }
+            object(map<string,object> map):type{OBJECT_TYPE::OBJECT} {                
+                convertToObject();
+                for(const auto& [key, value]: map){
+                     (*map_ptr)[key]=value;
+                }
+            }
 
             //copy constructor
             // object(const object &obj): type{obj.type},value_int{obj.value_int},vec_ptr{obj.vec_ptr}, map_ptr{obj.map_ptr} { 
@@ -137,6 +149,15 @@ namespace Ctriplus
 
             object operator()() ;
             object operator()(object argument) ;
+
+            vector<object>::iterator begin()
+            {
+                return (*vec_ptr).begin();
+            }
+            vector<object>::iterator end()
+            {
+                return (*vec_ptr).end();
+            }
 
             string toString(const string padding)const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
