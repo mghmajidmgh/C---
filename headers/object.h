@@ -38,12 +38,11 @@ namespace Ctriplus
         bool value_bool;
         char value_char{};
         int value_int{};
-        long long value_ll{};
+        // long long value_ll{};
         double value_double{};
-        long double value_long_double{};
+        // long double value_long_double{};
         string value_str{};
         function func;
-        //void * ptr;
         std::shared_ptr<vector<object>> vec_ptr{};
         std::shared_ptr<map<string, object> > map_ptr{};
        
@@ -71,9 +70,9 @@ namespace Ctriplus
             object(bool value):value_bool{value},type{OBJECT_TYPE::BOOL} {}
             object(char value):value_char{value},type{OBJECT_TYPE::CHAR} {}
             object(int value):value_int{value},type{OBJECT_TYPE::INT} {}
-            object(long long value):value_ll{value},type{OBJECT_TYPE::LONG_LONG} {}
+            // object(long long value):value_ll{value},type{OBJECT_TYPE::LONG_LONG} {}
             object(double value):value_double{value},type{OBJECT_TYPE::DOUBLE} {}
-            object(long double value):value_long_double{value},type{OBJECT_TYPE::LONG_DOUBLE} {}
+            // object(long double value):value_long_double{value},type{OBJECT_TYPE::LONG_DOUBLE} {}
             object(string value):value_str{value},type{OBJECT_TYPE::STRING} {checkForObjectString(value);}
             object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {checkForObjectString(value);}            
             object(function func):func{func},type{OBJECT_TYPE::FUNCTION} {}
@@ -110,9 +109,9 @@ namespace Ctriplus
             bool isBool()const{return (type==OBJECT_TYPE::BOOL)?true:false;}
             bool isChar()const{return (type==OBJECT_TYPE::CHAR)?true:false;}
             bool isInt()const{return (type==OBJECT_TYPE::INT)?true:false;}
-            bool isLongLong()const{return (type==OBJECT_TYPE::LONG_LONG)?true:false;}
+            // bool isLongLong()const{return (type==OBJECT_TYPE::LONG_LONG)?true:false;}
             bool isDouble()const{return (type==OBJECT_TYPE::DOUBLE)?true:false;}
-            bool isLongDouble()const{return (type==OBJECT_TYPE::LONG_DOUBLE)?true:false;}
+            // bool isLongDouble()const{return (type==OBJECT_TYPE::LONG_DOUBLE)?true:false;}
             bool isString()const{return (type==OBJECT_TYPE::STRING)?true:false;}
             bool isArray()const{return (type==OBJECT_TYPE::ARRAY)?true:false;}
             bool isObject()const{return (type==OBJECT_TYPE::OBJECT)?true:false;}
@@ -201,10 +200,10 @@ namespace Ctriplus
     ////////////////////////////////
 
     ///////   parseInt    //////////
-    var parseBool(string value);
-    var parseInt(string value);
-    var parseFloat(string value);
-    var parseDouble(string value);
+    object parseBool(string value);
+    object parseInt(string value);
+    object parseFloat(string value);
+    object parseDouble(string value);
     ////////////////////////////////
 
     

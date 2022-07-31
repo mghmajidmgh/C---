@@ -16,9 +16,9 @@ namespace Ctriplus
         if (type==OBJECT_TYPE::BOOL) {ret=(value_bool)?"true":"false";}
         else if (type==OBJECT_TYPE::CHAR) {ret=to_string(value_char);}
         else if (type==OBJECT_TYPE::INT){ret=to_string(value_int);}
-        else if (type==OBJECT_TYPE::LONG_LONG){ret=to_string(value_ll);}
+        // else if (type==OBJECT_TYPE::LONG_LONG){ret=to_string(value_ll);}
         else if (type==OBJECT_TYPE::DOUBLE){ret=to_string(value_double);}
-        else if (type==OBJECT_TYPE::LONG_DOUBLE){ret=to_string(value_long_double);}
+        // else if (type==OBJECT_TYPE::LONG_DOUBLE){ret=to_string(value_long_double);}
         else if (type==OBJECT_TYPE::STRING){ret=(value_str);}
         else if (type==OBJECT_TYPE::ARRAY){
             bool isfirst=true;
@@ -140,15 +140,15 @@ var JSON::parseR(string text,int ind) {
 
     
     ///////   parseInt    //////////
-    var parseBool(string value)
+    object parseBool(string value)
     {
-        var ret;        
+        object ret;        
         if(value=="true"){ret=true;}else if(value=="false"){ret=false;}else{std::cerr << "string is not bool in parseBool" << '\n';}       
         return ret;
     }
-    var parseInt(string value)
+    object parseInt(string value)
     {
-        var ret;
+        object ret;
         try
         {
             ret = stoi(value);
@@ -159,9 +159,9 @@ var JSON::parseR(string text,int ind) {
         }
         return ret;
     }
-    var parseFloat(string value)
+    object parseFloat(string value)
     {
-        var ret;
+        object ret;
         try
         {
             ret = stof(value);
@@ -172,9 +172,9 @@ var JSON::parseR(string text,int ind) {
         }
         return ret;
     }
-    var parseDouble(string value)
+    object parseDouble(string value)
     {
-        var ret;
+        object ret;
         try
         {
             ret = stod(value);
@@ -186,24 +186,24 @@ var JSON::parseR(string text,int ind) {
         return ret;
     }
     ////////////////////////////////
-    string type(var obj){
+    string type(object obj){
         string ret="";
 
-        if (obj.type==OBJECT_TYPE::UNDEFIEND) {ret="UNDEFIEND";}
-        else if (obj.type==OBJECT_TYPE::BOOL) {ret="BOOL";}
-        else if (obj.type==OBJECT_TYPE::CHAR) {ret="CHAR";}
-        else if (obj.type==OBJECT_TYPE::INT){ret="INT";}
-        else if (obj.type==OBJECT_TYPE::LONG_LONG){ret="LONG_LONG";}
-        else if (obj.type==OBJECT_TYPE::DOUBLE){ret="DOUBLE";}
-        else if (obj.type==OBJECT_TYPE::LONG_DOUBLE){ret="LONG_DOUBLE";}
-        else if (obj.type==OBJECT_TYPE::STRING){ret="STRING";}
-        else if (obj.type==OBJECT_TYPE::ARRAY){ ret="ARRAY";  }
-        else if (obj.type==OBJECT_TYPE::OBJECT){ ret="OBJECT" ;     }
-        else if (obj.type==OBJECT_TYPE::FUNCTION){ret="FUNCTION";}
+        if (obj.type==OBJECT_TYPE::UNDEFIEND) {ret="undefiend";}
+        else if (obj.type==OBJECT_TYPE::BOOL) {ret="bool";}
+        else if (obj.type==OBJECT_TYPE::CHAR) {ret="char";}
+        else if (obj.type==OBJECT_TYPE::INT){ret="int";}
+        else if (obj.type==OBJECT_TYPE::LONG_LONG){ret="long long";}
+        else if (obj.type==OBJECT_TYPE::DOUBLE){ret="double";}
+        else if (obj.type==OBJECT_TYPE::LONG_DOUBLE){ret="long double";}
+        else if (obj.type==OBJECT_TYPE::STRING){ret="string";}
+        else if (obj.type==OBJECT_TYPE::ARRAY){ ret="array";  }
+        else if (obj.type==OBJECT_TYPE::OBJECT){ ret="object" ;     }
+        else if (obj.type==OBJECT_TYPE::FUNCTION){ret="function";}
 
         return ret;
     }
-    int len(var obj){
+    int len(object obj){
         if (obj.type==OBJECT_TYPE::STRING){return obj.value_str.length();}
         else if (obj.type==OBJECT_TYPE::ARRAY){ return (*obj.vec_ptr).size(); }
         else if (obj.type==OBJECT_TYPE::OBJECT){  return (*obj.map_ptr).size(); }
