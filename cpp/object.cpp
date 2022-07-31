@@ -3,6 +3,16 @@
 
 namespace Ctriplus
 {   
+    object&  object::operator[](int index){
+        if (type!=OBJECT_TYPE::ARRAY){convertToArray();}
+        if(index>=0){ return (*vec_ptr).at(index);}
+        else{return ( (*vec_ptr).size()+index>=0 )? (*vec_ptr).at((*vec_ptr).size()+index): object();}       
+    }
+    object& object::subscriptor(string name){        
+        if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
+        if((*map_ptr)[name].isFunction()){(*map_ptr)[name].parent=this;}
+        return (*map_ptr)[name];
+    }
     
     object object::operator()(){
         return func(*parent);
@@ -193,9 +203,9 @@ var JSON::parseR(string text,int ind) {
         else if (obj.type==OBJECT_TYPE::BOOL) {ret="bool";}
         else if (obj.type==OBJECT_TYPE::CHAR) {ret="char";}
         else if (obj.type==OBJECT_TYPE::INT){ret="int";}
-        else if (obj.type==OBJECT_TYPE::LONG_LONG){ret="long long";}
+        // else if (obj.type==OBJECT_TYPE::LONG_LONG){ret="long long";}
         else if (obj.type==OBJECT_TYPE::DOUBLE){ret="double";}
-        else if (obj.type==OBJECT_TYPE::LONG_DOUBLE){ret="long double";}
+        // else if (obj.type==OBJECT_TYPE::LONG_DOUBLE){ret="long double";}
         else if (obj.type==OBJECT_TYPE::STRING){ret="string";}
         else if (obj.type==OBJECT_TYPE::ARRAY){ ret="array";  }
         else if (obj.type==OBJECT_TYPE::OBJECT){ ret="object" ;     }

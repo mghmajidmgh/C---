@@ -131,15 +131,9 @@ namespace Ctriplus
                 return obj;
             }
             object& operator++(){value_int++; return *this;}
-            object& operator[](size_t index){
-                if (type!=OBJECT_TYPE::ARRAY){convertToArray();}
-                return (*vec_ptr).at(index);
-            }
-            object& subscriptor(string name){
-                if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
-                if((*map_ptr)[name].isFunction()){(*map_ptr)[name].parent=this;}
-                return (*map_ptr)[name];
-            }
+            object& operator[](int index);
+
+            object& subscriptor(string name);
             object& operator[](const char* name){return subscriptor(string(name) );}
             object& operator[](string name){return subscriptor(name); }
 
