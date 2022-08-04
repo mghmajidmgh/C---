@@ -59,8 +59,26 @@ namespace Ctriplus
         return stream;
     }
 
-
+    var  object::keys(){
+        var ret;        
+        if (type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){ret.push_back(key);} }
+        return ret;
+    }
+    var  object::values(){
+        var ret;        
+        if (type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){ret.push_back(value);} }
+        return ret;
+    }
+     var  object::items(){
+        var ret;        
+        if (type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){var arr; arr.push_back(key); arr.push_back(value);  ret.push_back(arr);} }
+        return ret;
+    }
+    bool in(var value,var obj){
+        if (type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){if(){}} }
+    }
     
+
 string JSON::getWithoutWhiteSpace(string text){
     string ret="";
     for (size_t ind = 0; ind < text.length(); ind++)

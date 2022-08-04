@@ -156,7 +156,7 @@ namespace Ctriplus
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
             friend string type(var obj);
             friend int len(var obj);
-
+            object& push(object obj){return push_back(obj);}
             object& push_back(object obj){
                 if (type!=OBJECT_TYPE::ARRAY)
                 {
@@ -166,6 +166,12 @@ namespace Ctriplus
                 vec_ptr->push_back(obj);
                 return *this;
             }
+
+            ///////////         python      //////////////////////////
+            var keys();
+            var values();
+            var items();
+            bool in(var value,var obj);
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
     };
 
