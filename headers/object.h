@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 
 using namespace std;
 using namespace std::rel_ops;
@@ -170,7 +171,7 @@ namespace Ctriplus
             ///////////         python      //////////////////////////
             var keys();
             var values();
-            var items();
+            map<string, object>& items();
             bool in(var value,var obj);
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
     };

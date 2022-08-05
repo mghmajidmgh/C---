@@ -6,7 +6,7 @@ namespace Ctriplus
     object&  object::operator[](int index){
         if (type!=OBJECT_TYPE::ARRAY){convertToArray();}
         if(index>=0){ return (*vec_ptr).at(index);}
-        else{return ( (*vec_ptr).size()+index>=0 )? (*vec_ptr).at((*vec_ptr).size()+index): object();}       
+        else{ if ( (*vec_ptr).size()+index>=0 ){return (*vec_ptr).at((*vec_ptr).size()+index); }else{ throw runtime_error("inde out of range") ; }}       
     }
     object& object::subscriptor(string name){        
         if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
@@ -69,14 +69,13 @@ namespace Ctriplus
         if (type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){ret.push_back(value);} }
         return ret;
     }
-     var  object::items(){
-        var ret;        
-        if (type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){var arr; arr.push_back(key); arr.push_back(value);  ret.push_back(arr);} }
-        return ret;
+    map<string, object>& object::items(){
+        if (type==OBJECT_TYPE::OBJECT){ return *this->map_ptr ; }
+        return *this->map_ptr ;
     }
-    bool in(var value,var obj){
-        if (type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){if(){}} }
-    }
+    // bool in(var value,var obj){
+    //     if (obj.type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){if(){}} }
+    // }
     
 
 string JSON::getWithoutWhiteSpace(string text){
