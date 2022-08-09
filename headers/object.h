@@ -82,10 +82,22 @@ namespace Ctriplus
                 convertToArray();
                 for(const auto& item:vec){ push_back(item); cout<<endl<<item;}
             }
-            // object(initializer_list<object> vec):type{OBJECT_TYPE::ARRAY} {
-            //     convertToArray();
-            //     for(const auto& item:vec){ push_back(item);}
-            // }
+            object(initializer_list<object> vec) {
+                if (vec.size()==0)
+                {type=OBJECT_TYPE::UNDEFIEND;}
+                else if (vec.size()==1)
+                {
+                    *this=*vec.begin();
+                }
+                else if (vec.size()>1)
+                {
+                    type=OBJECT_TYPE::ARRAY;
+                    convertToArray();
+                    for(const auto& item:vec){ push_back(item);}
+                }
+                
+                
+            }
             // object(initializer_list<string,object> map):type{OBJECT_TYPE::OBJECT} {                
             //     convertToObject();
             //     for(const auto& [key, value]: map){
@@ -131,6 +143,14 @@ namespace Ctriplus
                 }
                 return obj;
             }
+            object operator+=(const object& obj){
+                if(type==OBJECT_TYPE::BOOL || obj.type==OBJECT_TYPE::BOOL){throw runtime_error{ "bool can't use in += operator"};}
+                else if(type==OBJECT_TYPE::INT && obj.type==OBJECT_TYPE::INT){ value_int+=obj.value_int; }
+                else if(type==OBJECT_TYPE::STRING){
+                    return value_str+obj.getString();
+                }
+                return obj;
+            }
             object& operator++(){value_int++; return *this;}
             object& operator[](int index);
 
@@ -138,8 +158,12 @@ namespace Ctriplus
             object& operator[](const char* name){return subscriptor(string(name) );}
             object& operator[](string name){return subscriptor(name); }
 
+            operator bool() const { return value_bool; }
+            operator char() const { return value_char; }
             operator int() const { return value_int; }
             operator double() const { return value_double; }
+            operator string() const { return toString(); }
+
 
             object operator()() ;
             object operator()(object argument) ;
@@ -152,6 +176,7 @@ namespace Ctriplus
             {
                 return (*vec_ptr).end();
             }
+            object& foreach(void (*)(object &obj));
 
             string toString(const string padding)const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);

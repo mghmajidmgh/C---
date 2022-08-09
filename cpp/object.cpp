@@ -1,4 +1,4 @@
- 
+#include <algorithm> 
 #include "../headers/object.h"
 
 namespace Ctriplus
@@ -6,9 +6,15 @@ namespace Ctriplus
     const object undefined;
 
     object&  object::operator[](int index){
-        if (type!=OBJECT_TYPE::ARRAY){convertToArray();}
-        if(index>=0){ return (*vec_ptr).at(index);}
-        else{ if ( (*vec_ptr).size()+index>=0 ){return (*vec_ptr).at((*vec_ptr).size()+index); }else{ throw runtime_error("inde out of range") ; }}       
+        if (type==OBJECT_TYPE::STRING){
+            if(index>=0){ return value_str[index];}
+            else{ if ( value_str.size()+index>=0 ){return value_str[value_str.size()+index]; }else{ throw runtime_error("index out of range") ; }}       
+   
+        }else{
+            if (type!=OBJECT_TYPE::ARRAY){convertToArray();}
+            if(index>=0){ return (*vec_ptr).at(index);}
+            else{ if ( (*vec_ptr).size()+index>=0 ){return (*vec_ptr).at((*vec_ptr).size()+index); }else{ throw runtime_error("index out of range") ; }}       
+        }
     }
     object& object::subscriptor(string name){        
         if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
@@ -19,6 +25,11 @@ namespace Ctriplus
     object object::operator()(){
         return func(*parent);
     } 
+    object& object::foreach(void (*func)(object &obj) ){
+        if (type==OBJECT_TYPE::ARRAY){ std::for_each( vec_ptr->begin(), vec_ptr->end(), func); }
+        
+        return *this;
+    }
 
     string object::toString(const string padding="")const{
         string ret=padding;

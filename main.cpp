@@ -15,6 +15,34 @@ class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 int main(int argc, char const *argv[])
 {
     {
+        var str="Hrllo";
+        char ch=str[-1];
+    }
+    {
+        var a=340;
+        var b=2.1906;
+        var c=false;
+        var s="Hi";
+        print(a,b,c,s);
+
+        var arr={1,false,0.3,"Hello"};
+        var obj=R"({firstName:"John", lastName:"Doe"})";
+        print(arr);
+        print(obj);
+
+    }
+    {
+        var a{5}, b{1,2,"salam",{4,5,6}}, c{};
+        print(a,b,c);
+    }
+
+    {
+        var a={1,2,3};
+        a.foreach([](var& i) { i += 1; } );
+        a.foreach([](auto& element) { std::cout << element << " "; }) ;
+
+    }
+    {
      map<string, var> fruit_map =  {{"1", "Apple"},
                                   {"2", "Banana"},
                                   {"3", "Mango"},
