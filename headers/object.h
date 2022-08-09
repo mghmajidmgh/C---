@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 
 using namespace std;
 using namespace std::rel_ops;
@@ -156,7 +157,7 @@ namespace Ctriplus
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
             friend string type(var obj);
             friend int len(var obj);
-
+            object& push(object obj){return push_back(obj);}
             object& push_back(object obj){
                 if (type!=OBJECT_TYPE::ARRAY)
                 {
@@ -166,6 +167,12 @@ namespace Ctriplus
                 vec_ptr->push_back(obj);
                 return *this;
             }
+
+            ///////////         python      //////////////////////////
+            var keys();
+            var values();
+            map<string, object>& items();
+            bool in(var value,var obj);
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
     };
     extern const object undefined;
