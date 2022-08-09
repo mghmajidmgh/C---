@@ -15,6 +15,22 @@ class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 int main(int argc, char const *argv[])
 {
     {
+        var obj={
+            {"name","hasan"},
+            {"family","abbasi"},
+            {"grades",{1,2,7,9}},
+            {"size",{
+                    {"width",100},
+                    {"height",200}
+                }
+            }
+        };
+
+print(obj);
+int i=0;
+
+    }
+    {
         var thislist = {"apple", "banana", "cherry", "orange", "kiwi", "melon", "mango"};
         var l=thislist["2:5"];
         print(l);
