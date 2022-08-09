@@ -33,6 +33,8 @@ namespace Ctriplus
             static object parse(string text);
     };
 
+  
+
     class object
     {
         OBJECT_TYPE type{};
@@ -78,7 +80,8 @@ namespace Ctriplus
             object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {checkForObjectString(value);}            
             object(function func):func{func},type{OBJECT_TYPE::FUNCTION} {}
             //object(functionNoReturn funcp):type{OBJECT_TYPE::FUNCTION} { func= [funcp](object self,object argument)->object {funcp(self,argument); return object();};  }
-            object(vector<object> vec):type{OBJECT_TYPE::ARRAY} {                
+            template <class T>
+            object(vector<T> vec):type{OBJECT_TYPE::ARRAY} {                
                 convertToArray();
                 for(const auto& item:vec){ push_back(item); cout<<endl<<item;}
             }
@@ -178,7 +181,7 @@ namespace Ctriplus
             }
             object& foreach(void (*)(object &obj));
 
-            string toString(const string padding)const;
+            string toString(const string padding="")const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
             friend string type(var obj);
             friend int len(var obj);
@@ -199,6 +202,8 @@ namespace Ctriplus
             map<string, object>& items();
             bool in(var value,var obj);
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
+
+            object split(const char delim);
     };
     extern const object undefined;
     

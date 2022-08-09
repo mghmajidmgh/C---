@@ -15,8 +15,14 @@ class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 int main(int argc, char const *argv[])
 {
     {
+        var thislist = {"apple", "banana", "cherry", "orange", "kiwi", "melon", "mango"};
+        var l=thislist["2:5"];
+        print(l);
+    }
+    {
         var str="Hrllo";
         char ch=str[-1];
+        print(ch);
     }
     {
         var a=340;

@@ -7,8 +7,11 @@ namespace Ctriplus
 
     object&  object::operator[](int index){
         if (type==OBJECT_TYPE::STRING){
-            if(index>=0){ return value_str[index];}
-            else{ if ( value_str.size()+index>=0 ){return value_str[value_str.size()+index]; }else{ throw runtime_error("index out of range") ; }}       
+            vec_ptr= std::make_shared< vector<object>>(); 
+            for(char ch :value_str){vec_ptr->push_back(ch);}
+
+            if(index>=0){ return (*vec_ptr)[index];}
+            else{ if ( vec_ptr->size()+index>=0 ){return (*vec_ptr)[vec_ptr->size()+index]; }else{ throw runtime_error("index out of range") ; }}       
    
         }else{
             if (type!=OBJECT_TYPE::ARRAY){convertToArray();}
@@ -16,10 +19,24 @@ namespace Ctriplus
             else{ if ( (*vec_ptr).size()+index>=0 ){return (*vec_ptr).at((*vec_ptr).size()+index); }else{ throw runtime_error("index out of range") ; }}       
         }
     }
-    object& object::subscriptor(string name){        
-        if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
-        if((*map_ptr)[name].isFunction()){(*map_ptr)[name].parent=this;}
-        return (*map_ptr)[name];
+    object& object::subscriptor(string name){  
+        if (type==OBJECT_TYPE::ARRAY && name.find(':') != std::string::npos) {//Range of Indexes
+            object strs=object(name).split(':');
+            int start=stoi(strs[0]), end=stoi(strs[1]); 
+            object ret;
+            for (size_t i = start; i < end; i++)
+            {
+                ret.push_back((*vec_ptr)[i] ); 
+                var s=(*vec_ptr)[i];
+                print(ret);
+            }           
+            return ret;//fixme
+        }
+        else{
+            if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
+            if((*map_ptr)[name].isFunction()){(*map_ptr)[name].parent=this;}
+            return (*map_ptr)[name];
+        }
     }
     
     object object::operator()(){
@@ -31,7 +48,7 @@ namespace Ctriplus
         return *this;
     }
 
-    string object::toString(const string padding="")const{
+    string object::toString(const string padding)const{
         string ret=padding;
         string tpad="  ";
 
@@ -89,6 +106,19 @@ namespace Ctriplus
     // bool in(var value,var obj){
     //     if (obj.type==OBJECT_TYPE::OBJECT){for(auto& [key, value]: *map_ptr){if(){}} }
     // }
+
+     object object::split(const char delim){
+        object v;
+        if (type==OBJECT_TYPE::STRING){ 
+            size_t start, end = 0;    
+            while ((start = value_str.find_first_not_of(delim, end)) != string::npos)
+            {
+                end = value_str.find(delim, start);
+                v.push_back(value_str.substr(start, end - start));
+            }
+         }
+        return v;
+     }
     
 
 string JSON::getWithoutWhiteSpace(string text){
@@ -250,6 +280,7 @@ var JSON::parseR(string text,int ind) {
         return 0;
     }
 
+     
 
 
 }
