@@ -168,7 +168,7 @@ namespace Ctriplus
             }
             //void ttt(var a,var b,var c=undefined,var d=undefined){}
     };
-
+    extern const object undefined;
     
 
     class Console{

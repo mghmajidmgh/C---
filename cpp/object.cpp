@@ -3,10 +3,12 @@
 
 namespace Ctriplus
 {   
+    const object undefined;
+
     object&  object::operator[](int index){
         if (type!=OBJECT_TYPE::ARRAY){convertToArray();}
         if(index>=0){ return (*vec_ptr).at(index);}
-        else{return ( (*vec_ptr).size()+index>=0 )? (*vec_ptr).at((*vec_ptr).size()+index): object();}       
+        //else{return ( (*vec_ptr).size()+index>=0 )? (*vec_ptr).at((*vec_ptr).size()+index): undefined;}       
     }
     object& object::subscriptor(string name){        
         if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }

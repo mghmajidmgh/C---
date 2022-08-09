@@ -9,14 +9,14 @@
                 "--std",
                 "c++17",
                 "-fdiagnostics-color=always",
-                "${fileDirname}\\main.cpp",
-                "${fileDirname}\\cpp\\object.cpp",
+                "${workspaceFolder}\\main.cpp",
+                "${workspaceFolder}\\cpp\\object.cpp",
 				"-g",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
-                //"cwd": "${fileDirname}"
+                //"cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
@@ -33,10 +33,10 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
