@@ -33,6 +33,7 @@ namespace Ctriplus
             static object parse(string text);
     };
 
+    const std::string WHITESPACE = " \n\r\t\f\v";
   
 
     class object
@@ -194,6 +195,25 @@ namespace Ctriplus
                 }
                 vec_ptr->push_back(obj);
                 return *this;
+            }
+            ///////////         string      //////////////////////////
+            
+ 
+            std::string ltrim()
+            {
+                size_t start = value_str.find_first_not_of(WHITESPACE);
+                return (start == std::string::npos) ? "" : value_str.substr(start);
+            }
+            
+            std::string rtrim()
+            {
+                size_t end = value_str.find_last_not_of(WHITESPACE);
+                return (end == std::string::npos) ? "" : value_str.substr(0, end + 1);
+            }
+            
+            std::string trim() {
+                ltrim();rtrim();
+                return value_str;
             }
 
             ///////////         python      //////////////////////////

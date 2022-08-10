@@ -22,15 +22,13 @@ namespace Ctriplus
     object& object::subscriptor(string name){  
         if (type==OBJECT_TYPE::ARRAY && name.find(':') != std::string::npos) {//Range of Indexes
             object strs=object(name).split(':');
-            int start=stoi(strs[0]), end=stoi(strs[1]); 
-            object ret;
+            int start=stoi(strs[0]), end=stoi(strs[1]); //int start= (strs[0].trim()=="")?0: stoi(strs[0].trim() ), end=(strs[1].trim()=="")? vec_ptr->size() : stoi(strs[1].trim() ); 
+             map_ptr= std::make_shared< map<string,object>>(); //for temp data
             for (size_t i = start; i < end; i++)
             {
-                ret.push_back((*vec_ptr)[i] ); 
-                var s=(*vec_ptr)[i];
-                print(ret);
+                (*map_ptr)["tempArr"].push_back((*vec_ptr)[i] ); 
             }           
-            return ret;//fixme
+            return (*map_ptr)["tempArr"];
         }
         else{
             if (type!=OBJECT_TYPE::OBJECT){convertToObject(); }
