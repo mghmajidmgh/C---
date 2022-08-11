@@ -1,9 +1,41 @@
-#include <algorithm> 
 #include "../headers/object.h"
 
 namespace Ctriplus
 {   
     const object undefined;
+
+    object object::operator+(const object& obj)const{
+        if(type==OBJECT_TYPE::STRING){
+            return value_str+obj.getString();
+        }else if(type==OBJECT_TYPE::ARRAY){
+            if (obj.type==OBJECT_TYPE::ARRAY){
+                object ret;
+                for (const auto &item : *vec_ptr){ ret.push_back(item); } 
+                for (const auto &item : obj){ ret.push_back(item); }     
+                return ret;   
+            }else{                
+                object ret;
+                for (auto &&item : *vec_ptr){ ret.push_back(item); }
+                ret.push_back(obj);
+                return ret;
+            }    
+        }
+        return undefined;
+    }
+    object object::operator+=(const object& obj){
+        if(type==OBJECT_TYPE::BOOL || obj.type==OBJECT_TYPE::BOOL){throw runtime_error{ "bool can't use in += operator"};}
+        else if(type==OBJECT_TYPE::INT && obj.type==OBJECT_TYPE::INT){ value_int+=obj.value_int; }
+        else if(type==OBJECT_TYPE::STRING){
+            return value_str+obj.getString();
+        }else if(type==OBJECT_TYPE::ARRAY){
+            if (obj.type==OBJECT_TYPE::ARRAY){
+                for (const auto &item : obj){ push_back(item); } 
+            }else{    
+                push_back(obj);
+            }    
+        }
+        return *this;
+    }
 
     object&  object::operator[](int index){
         if (type==OBJECT_TYPE::STRING){
@@ -22,8 +54,9 @@ namespace Ctriplus
     object& object::subscriptor(string name){  
         if (type==OBJECT_TYPE::ARRAY && name.find(':') != std::string::npos) {//Range of Indexes
             object strs=object(name).split(':');
-            int start=stoi(strs[0]), end=stoi(strs[1]); //int start= (strs[0].trim()=="")?0: stoi(strs[0].trim() ), end=(strs[1].trim()=="")? vec_ptr->size() : stoi(strs[1].trim() ); 
-             map_ptr= std::make_shared< map<string,object>>(); //for temp data
+            int start= (strs[0].trim()=="")?0: stoi(strs[0].trim() ), end=(strs[1].trim()=="")? vec_ptr->size() : stoi(strs[1].trim() ); 
+            start=(start>=0)?start:vec_ptr->size()+start; end=(end>=0)?end:vec_ptr->size()+end;//check for Negative Indexing
+            map_ptr= std::make_shared< map<string,object>>(); //for temp data
             for (size_t i = start; i < end; i++)
             {
                 (*map_ptr)["tempArr"].push_back((*vec_ptr)[i] ); 

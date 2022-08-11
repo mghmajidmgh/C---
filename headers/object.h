@@ -141,20 +141,8 @@ namespace Ctriplus
             bool operator==(const object& obj)const{ return value_int==obj.value_int; }
             bool operator==(int value)const{ return value_int==value; }
 
-            object operator+(const object& obj)const{
-                if(type==OBJECT_TYPE::STRING){
-                    return value_str+obj.getString();
-                }
-                return obj;
-            }
-            object operator+=(const object& obj){
-                if(type==OBJECT_TYPE::BOOL || obj.type==OBJECT_TYPE::BOOL){throw runtime_error{ "bool can't use in += operator"};}
-                else if(type==OBJECT_TYPE::INT && obj.type==OBJECT_TYPE::INT){ value_int+=obj.value_int; }
-                else if(type==OBJECT_TYPE::STRING){
-                    return value_str+obj.getString();
-                }
-                return obj;
-            }
+            object operator+(const object& obj)const;
+            object operator+=(const object& obj);
             object& operator++(){value_int++; return *this;}
             object& operator[](int index);
 
@@ -187,7 +175,7 @@ namespace Ctriplus
             friend string type(var obj);
             friend int len(var obj);
             object& push(object obj){return push_back(obj);}
-            object& push_back(object obj){
+            object& push_back(const object obj){
                 if (type!=OBJECT_TYPE::ARRAY)
                 {
                     convertToArray();

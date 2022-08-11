@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
 { {
      
         var thislist = {1.234, "banana", "cherry", true, "kiwi", {1,2,3}, "mango"};
-        var l=thislist["2:5"];
+        var l=thislist["-4:-2"];
         print(l);
     }
     {
