@@ -15,7 +15,7 @@ namespace Ctriplus
                 return ret;   
             }else{                
                 object ret;
-                for (auto &&item : *vec_ptr){ ret.push_back(item); }
+                for (auto &item : *vec_ptr){ ret.push_back(item); }
                 ret.push_back(obj);
                 return ret;
             }    

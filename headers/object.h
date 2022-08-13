@@ -160,14 +160,25 @@ namespace Ctriplus
             object operator()() ;
             object operator()(object argument) ;
 
-            vector<object>::iterator begin()
+            auto begin()
             {
-                return (*vec_ptr).begin();
+                return vec_ptr->begin();
             }
-            vector<object>::iterator end()
+            auto end()
             {
-                return (*vec_ptr).end();
+                return vec_ptr->end();
             }
+            auto begin()const
+            {
+                return vec_ptr->begin();
+            }
+            auto end()const
+            {
+                return vec_ptr->end();
+            }
+            
+
+
             object& foreach(void (*)(object &obj));
 
             string toString(const string padding="")const;
@@ -175,7 +186,7 @@ namespace Ctriplus
             friend string type(var obj);
             friend int len(var obj);
             object& push(object obj){return push_back(obj);}
-            object& push_back(const object obj){
+            object& push_back(const object& obj){
                 if (type!=OBJECT_TYPE::ARRAY)
                 {
                     convertToArray();
