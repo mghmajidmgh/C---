@@ -13,7 +13,11 @@ class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 
 
 int main(int argc, char const *argv[])
-{ {
+{ 
+    {
+        range(10).foreach([](var& i){print(i);});
+    }
+    {
      
         var thislist = {1.234, "banana", "cherry", true, "kiwi", {1,2,3}, "mango"};
         var l=thislist["-4:-2"];
@@ -81,7 +85,7 @@ int i=0;
 
     var x = R"({firstName:"John", lastName:"Doe"})";
     print(x);
-    function f=[](object& self){return self["firstName"]+ var(" ")+ self["lastName"];};
+    //auto f=[](object& self){return self["firstName"]+ var(" ")+ self["lastName"];};
     // var r=f(x);
     // print(r);
     // var of=f;

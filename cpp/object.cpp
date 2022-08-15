@@ -73,9 +73,12 @@ namespace Ctriplus
     object object::operator()(){
         return func(*parent);
     } 
-    object& object::foreach(void (*func)(object &obj) ){
-        if (type==OBJECT_TYPE::ARRAY){ std::for_each( vec_ptr->begin(), vec_ptr->end(), func); }
-        
+    object& object::foreach(function<void(object&)> func){
+        if (type==OBJECT_TYPE::ARRAY){ std::for_each( vec_ptr->begin(), vec_ptr->end(), func); }        
+        return *this;
+    }
+    object& object::foreach(void (*func)(object &obj,size_t index ) ){
+        if (type==OBJECT_TYPE::ARRAY){ for(int index=0;index<vec_ptr->size(); index++){ func((*vec_ptr)[index],index ); } }        
         return *this;
     }
 
@@ -119,6 +122,8 @@ namespace Ctriplus
         stream<<obj.toString("");
         return stream;
     }
+
+    
 
     var  object::keys(){
         var ret;        
@@ -237,7 +242,7 @@ var JSON::parseR(string text,int ind) {
     }
     Console console ;
 
-    void print(){};
+    void print(){cout<<endl;};
 
     
     ///////   parseInt    //////////
@@ -287,6 +292,15 @@ var JSON::parseR(string text,int ind) {
         return ret;
     }
     ////////////////////////////////
+    var range(size_t end){return range(0,end);}
+    var range(size_t start,size_t end,size_t step){
+        var ret;
+        for (size_t i = start; i < end; i+=step)
+        {
+           ret.push_back(i);
+        }
+        return ret;        
+    }
     string type(object obj){
         string ret="";
 

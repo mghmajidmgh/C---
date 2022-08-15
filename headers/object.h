@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <string>
 #include <tuple>
+#include <functional>
 
 using namespace std;
 using namespace std::rel_ops;
@@ -21,7 +22,7 @@ namespace Ctriplus
     using var=object;
 
     enum OBJECT_TYPE{UNDEFIEND,BOOL,CHAR,INT,LONG_LONG,DOUBLE,LONG_DOUBLE,STRING,ARRAY,OBJECT,FUNCTION};
-    using function=object (*)(object &self);
+    using function0=object (*)(object &self);
     using function1=object (*)(object &self,object& argument);
     using functionNoReturn=void (*)(object &self,object& argument);
 
@@ -46,7 +47,7 @@ namespace Ctriplus
         double value_double{};
         // long double value_long_double{};
         string value_str{};
-        function func;
+        function0 func;
         std::shared_ptr<vector<object>> vec_ptr{};
         std::shared_ptr<map<string, object> > map_ptr{};
        
@@ -73,13 +74,14 @@ namespace Ctriplus
             //object(undefined_class value):type{OBJECT_TYPE::UNDEFIEND} {}
             object(bool value):value_bool{value},type{OBJECT_TYPE::BOOL} {}
             object(char value):value_char{value},type{OBJECT_TYPE::CHAR} {}
+            object(size_t value):value_int{value},type{OBJECT_TYPE::INT} {}
             object(int value):value_int{value},type{OBJECT_TYPE::INT} {}
             // object(long long value):value_ll{value},type{OBJECT_TYPE::LONG_LONG} {}
             object(double value):value_double{value},type{OBJECT_TYPE::DOUBLE} {}
             // object(long double value):value_long_double{value},type{OBJECT_TYPE::LONG_DOUBLE} {}
             object(string value):value_str{value},type{OBJECT_TYPE::STRING} {checkForObjectString(value);}
             object(const char* value):value_str{string(value)},type{OBJECT_TYPE::STRING} {checkForObjectString(value);}            
-            object(function func):func{func},type{OBJECT_TYPE::FUNCTION} {}
+            object(function0 func):func{func},type{OBJECT_TYPE::FUNCTION} {}
             //object(functionNoReturn funcp):type{OBJECT_TYPE::FUNCTION} { func= [funcp](object self,object argument)->object {funcp(self,argument); return object();};  }
             template <class T>
             object(vector<T> vec):type{OBJECT_TYPE::ARRAY} {                
@@ -179,7 +181,8 @@ namespace Ctriplus
             
 
 
-            object& foreach(void (*)(object &obj));
+            object& foreach(function<void(object&)> );
+            object& foreach(void (*)(object &obj,size_t index));
 
             string toString(const string padding="")const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
@@ -215,7 +218,7 @@ namespace Ctriplus
                 return value_str;
             }
 
-            ///////////         python      //////////////////////////
+            ///////////         python like      //////////////////////////
             var keys();
             var values();
             map<string, object>& items();
@@ -238,6 +241,9 @@ namespace Ctriplus
     
     //inline bool operator<(const object& obj,int val)const{ return obj.value_int<val; }
 
+    ///////////         python like      //////////////////////////
+            var range(size_t end);
+            var range(size_t start,size_t end,size_t step=1);
     /////////   print    //////////
     // Variadic function
     void print();
