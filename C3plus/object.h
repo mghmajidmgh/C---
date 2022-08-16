@@ -182,7 +182,7 @@ namespace C3plus
 
 
             object& foreach(function<void(object&)> );
-            object& foreach(void (*)(object &obj,size_t index));
+            object& foreach(void (*)(object &obj,var index));
 
             string toString(const string padding="")const;
             friend std::ostream& operator<<(std::ostream& stream, const object& obj);
@@ -244,6 +244,7 @@ namespace C3plus
     ///////////         python like      //////////////////////////
             var range(size_t end);
             var range(size_t start,size_t end,size_t step=1);
+             object convertArrayToObject(var& arr);
     /////////   print    //////////
     // Variadic function
     void print();

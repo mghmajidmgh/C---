@@ -77,7 +77,7 @@ namespace C3plus
         if (type==OBJECT_TYPE::ARRAY){ std::for_each( vec_ptr->begin(), vec_ptr->end(), func); }        
         return *this;
     }
-    object& object::foreach(void (*func)(object &obj,size_t index ) ){
+    object& object::foreach(void (*func)(object &obj,var index ) ){
         if (type==OBJECT_TYPE::ARRAY){ for(int index=0;index<vec_ptr->size(); index++){ func((*vec_ptr)[index],index ); } }        
         return *this;
     }
@@ -300,6 +300,15 @@ var JSON::parseR(string text,int ind) {
            ret.push_back(i);
         }
         return ret;        
+    }
+    object convertArrayToObject(var arr){
+        var ret;
+        for (size_t i = 0; i < arr.le; i++)
+        {
+            /* code */
+        }
+        
+        return ret;
     }
     string type(object obj){
         string ret="";
