@@ -14,6 +14,7 @@ class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 
 int main(int argc, char const *argv[])
 { 
+    
     {
         range(10).foreach([](var& i){print(i);});
     }
