@@ -10,7 +10,7 @@
                 "c++17",
                 "-fdiagnostics-color=always",
                 "${workspaceFolder}\\main.cpp",
-                "${workspaceFolder}\\cpp\\object.cpp",
+                "${workspaceFolder}\\C3plus\\object.cpp",
 				"-g",
                 "-o",
                 "${workspaceFolder}\\${fileBasenameNoExtension}.exe"

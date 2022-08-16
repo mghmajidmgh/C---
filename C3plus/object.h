@@ -16,7 +16,7 @@
 using namespace std;
 using namespace std::rel_ops;
 
-namespace Ctriplus
+namespace C3plus
 {
     class object;        
     using var=object;

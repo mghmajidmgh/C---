@@ -1,6 +1,6 @@
-#include "../headers/object.h"
+#include "object.h"
 
-namespace Ctriplus
+namespace C3plus
 {   
     const object undefined;
 

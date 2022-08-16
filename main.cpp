@@ -1,8 +1,8 @@
-#include "headers/C+++.h"
+#include "C3plus/C+++.h"
 
 
 using namespace std;
-using namespace Ctriplus;
+using namespace C3plus;
 
 var u;
 void f(var a,var b=u){}
@@ -14,7 +14,7 @@ class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 
 int main(int argc, char const *argv[])
 { 
-    
+
     {
         range(10).foreach([](var& i){print(i);});
     }
