@@ -1,3 +1,62 @@
+#define WINVER 0x0500
+#include<windows.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+//g++.exe --std c++17 -fdiagnostics-color=always -static-libgcc -static-libstdc++ -L. -lwinpthread -llibwinpthread  F:\Project\Ctriplus\main.cpp F:\Project\Ctriplus\C3plus\object.cpp -g -o F:\Project\Ctriplus\main.exe -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive
+
+void setInput(INPUT * inp,unsigned int index, WORD keycode,BOOL kUp)
+{
+    inp[index].type = INPUT_KEYBOARD;
+    inp[index].ki.wVk = keycode;
+    inp[index].ki.wScan = MapVirtualKey(keycode, 0);
+    inp[index].ki.time = 0;
+    inp[index].ki.dwExtraInfo = 0;
+
+    if (kUp == 1)
+    {
+        inp[index].ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_EXTENDEDKEY;
+    }else
+    {
+        inp[index].ki.dwFlags =  0 | KEYEVENTF_EXTENDEDKEY;
+    }
+}
+
+void pressKeyB(char mK)
+{
+    HKL kbl = GetKeyboardLayout(0);
+    INPUT ip;
+    ip.type = INPUT_KEYBOARD;
+    ip.ki.time = 0;
+    ip.ki.dwFlags = KEYEVENTF_UNICODE;
+    if ((int)mK<65 || (int)mK>90) //for lowercase
+    {
+        ip.ki.wScan = 0;
+        ip.ki.wVk = VkKeyScanEx( mK, kbl );
+    }
+    else //for uppercase
+    {
+        ip.ki.wScan = mK;
+        ip.ki.wVk = 0;
+
+    }
+    ip.ki.dwExtraInfo = 0;
+    SendInput(1, &ip, sizeof(INPUT));
+}
+ void pressEnter()
+{
+   INPUT *inp = (INPUT*) malloc(sizeof(INPUT) * 2);
+    memset(inp,0,sizeof(INPUT));
+
+    setInput(inp,0,VK_NUMLOCK,0);
+    setInput(inp,1,VK_NUMLOCK,1);
+
+    SendInput(2,inp,sizeof(INPUT));
+
+    free(inp);
+
+}
+
 #include "C3plus/C+++.h"
 
 
@@ -12,9 +71,22 @@ int fp(int ii){ std::cout << NAME_OF(ii)<< std::endl; return 0;};
 class c{ public: c(){  std::cout << NAME_OF(*this)<< std::endl;};};
 
 
-int main(int argc, char const *argv[])
-{ 
 
+int main(int argc, char const *argv[])
+{ {
+     //showStart();
+     while (true)
+     {
+     pressEnter();
+       Sleep(2000);
+     }
+     
+     //int t=0; cin>>t;
+    // showStart();
+    // pressKeyB('f');
+    // pressEnter();
+    }
+    
     {
         range(10).foreach([](var& i){print(i);});
     }

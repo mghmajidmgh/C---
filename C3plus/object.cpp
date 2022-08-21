@@ -303,7 +303,7 @@ var JSON::parseR(string text,int ind) {
     }
     object convertArrayToObject(var arr){
         var ret;
-        for (size_t i = 0; i < arr.le; i++)
+        //for (size_t i = 0; i < arr.le; i++)
         {
             /* code */
         }
